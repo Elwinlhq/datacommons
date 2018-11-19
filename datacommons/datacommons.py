@@ -232,12 +232,12 @@ class Client(object):
 
   # ----------------------- OBSERVATION QUERY FUNCTIONS -----------------------
   # ----------------------------- ELWIN ---------------------------------------
-  def get_nodes(self, nodes, max_rows=100):
+  def get_nodes(self, nodes, count, max_rows=100):
     assert self._inited, 'Initialization was unsuccessful, cannot execute Query'
     query = ('SELECT (COUNT(DISTINCT ?{nodes}) as ?COUNT) WHERE {'
              '?{nodes} a ?o . '
-             'filter (!isblank(?{nodes})). }').format(nodes=nodes)
-    type_row = pd.DataFram(data=[{nodes: "Total"}])
+             'filter (!isblank(?{nodes})). }').format(nodes=nodes, count=count)
+    type_row = pd.DataFram(data=[{nodes: count}])
 
     try:
       dcid_column = self.query(query, max_rows)
