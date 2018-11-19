@@ -224,9 +224,29 @@ class Client(object):
         new_col_name,
         new_col_type,
         max_rows=max_rows)
+  # ----------------- GET NUMBER OF INSTANCES -------------
+  #def get_entities():
+    """ Get the number of entities in the dataCommons Knowledge Graph
+    Args
+    """
 
   # ----------------------- OBSERVATION QUERY FUNCTIONS -----------------------
+  # ----------------------------- ELWIN ---------------------------------------
+  def get_nodes(self, nodes, max_rows=100):
+    assert self._inited,
+    query = ('SELECT (COUNT(DISTINCT ?{nodes}) as ?COUNT) WHERE {'
+             '?{nodes} a ?o . '
+             'filter (!isblank(?{nodes})). }').format(nodes=nodes)
+    type_row = pd.DataFram(data=[{nodes}])
 
+    try:
+      dcid_column = self.query(query, max_rows)
+    except RuntimeError as e:
+      raise RuntimeError('Execute query\n%s\ngot an error:\n%s' % (query, e))
+
+    return pd.concat([type_row, dcid_column], ignore_index=True)
+
+  # ----------------------- OBSERVATION QUERY FUNCTIONS -----------------------
   def get_instances(self, col_name, instance_type, max_rows=100):
     """Get a list of instance dcids for a given type.
 
