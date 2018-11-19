@@ -233,7 +233,7 @@ class Client(object):
   # ----------------------- OBSERVATION QUERY FUNCTIONS -----------------------
   # ----------------------------- ELWIN ---------------------------------------
   def get_nodes(self, nodes, max_rows=100):
-    assert self._inited,
+    assert self._inited, 'Initialization was unsuccessful, cannot execute Query'
     query = ('SELECT (COUNT(DISTINCT ?{nodes}) as ?COUNT) WHERE {'
              '?{nodes} a ?o . '
              'filter (!isblank(?{nodes})). }').format(nodes=nodes)
