@@ -237,7 +237,7 @@ class Client(object):
     query = ('SELECT (COUNT(DISTINCT ?{nodes}) as ?COUNT) WHERE {'
              '?{nodes} a ?o . '
              'filter (!isblank(?{nodes})). }').format(nodes=nodes)
-    type_row = pd.DataFram(data=[{nodes}])
+    type_row = pd.DataFram(data=[{nodes: "Total"}])
 
     try:
       dcid_column = self.query(query, max_rows)
